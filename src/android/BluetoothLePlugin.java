@@ -765,7 +765,7 @@ public class BluetoothLePlugin extends CordovaPlugin {
     }
 
     advertiser.stopAdvertising(advertiseCallback);
-    
+
     if (isAdvertising) isAdvertising = false;
 
     JSONObject returnObj = new JSONObject();
@@ -1141,6 +1141,8 @@ public class BluetoothLePlugin extends CordovaPlugin {
       /* build the ScanSetting */
       ScanSettings.Builder scanSettings = new ScanSettings.Builder();
       scanSettings.setReportDelay(0);
+      scanSettings.setLegacy(false);
+      scanSettings.setPhy(ScanSettings.PHY_LE_ALL_SUPPORTED);
 
       int scanMode = obj.optInt(keyScanMode, ScanSettings.SCAN_MODE_LOW_LATENCY);
       try {
@@ -2789,7 +2791,7 @@ public class BluetoothLePlugin extends CordovaPlugin {
 
             // Reset isAdvertising when adapter is off (if STATE_TURNING_OFF doesn't trigger)
             if (isAdvertising) isAdvertising = false;
-            
+
             gattServer = null;
 
             pluginResult = new PluginResult(PluginResult.Status.OK, returnObj);
